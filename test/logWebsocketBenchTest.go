@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"math/rand"
 	"os"
@@ -14,24 +15,26 @@ import (
 )
 
 const url = "ws://172.31.20.65:9110/websocket"
+
 //const url = "ws://127.0.0.1:9110/websocket"
 
 var flagToWaitChan = make(chan int)
 
 func main() {
-	//conn := flag.Int("conn", -1, "Input conn")
-	//if *conn == -1 {
-	//	fmt.Println("please input conn param!")
-	//	return
-	//}
+	conn := flag.Int("conn", -1, "Input conn")
+	flag.Parse()
+	if *conn == -1 {
+		fmt.Println("please input conn param!")
+		return
+	}
 	f := newLogFile()
 	defer f.Close()
 	golog.SetOutput(f)
 	interrupt := make(chan os.Signal)
 	signal.Notify(interrupt, os.Interrupt, os.Kill)
 	var timeToSleep = 5
-	for curConn:= 0; curConn < 2; curConn++ {
-		golog.Info("new conn id" + strconv.Itoa(curConn)+"_")
+	for curConn := 0; curConn < 2; curConn++ {
+		golog.Info("new conn id" + strconv.Itoa(curConn) + "_")
 		go newOneConn(curConn)
 		// 1000以下sleep 0.3
 		var flag = <-flagToWaitChan
@@ -42,7 +45,7 @@ func main() {
 		}
 	}
 	select {
-	case <- interrupt:
+	case <-interrupt:
 		fmt.Println("人工中断")
 	}
 	//time.Sleep(time.Duration(time.Hour)) //防止主线程结束中断其他线程
@@ -58,7 +61,6 @@ func newLogFile() *os.File {
 
 	return f
 }
-
 
 func newOneConn(id int) {
 
@@ -103,13 +105,13 @@ func newOneConn(id int) {
 	var reqTime uint64 = 0
 	var jsonMsg []byte
 	for {
-		reqTime ++
+		reqTime++
 		select {
 		case <-done:
 			return
 		case <-ticker.C:
 			if reqTime == 1 {
-				data := AuthData{"v1.0", 2, "123456"}
+				data := AuthData{"v1.0", 10, " 023ZJLl12DYkOU0DFSm12dsLl12ZJLl" + strconv.Itoa(id)}
 				msg := AuthRequest{"1_1", data}
 				jsonMsg, _ = json.Marshal(msg)
 			} else {
