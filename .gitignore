@@ -7,11 +7,4 @@
 /out/**
 common.iml
 .idea
-base-websocket-all/build/
-base-websocket-all/out/
-base-websocket-core/build/
-base-websocket-core/out/
-base-websocket-monitor/out/
-base-websocket-monitor/build/
-base-websocket-common/build/
-base-websocket-common/out/
+*.iml
