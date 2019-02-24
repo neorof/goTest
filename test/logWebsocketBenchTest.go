@@ -33,7 +33,7 @@ func main() {
 	interrupt := make(chan os.Signal)
 	signal.Notify(interrupt, os.Interrupt, os.Kill)
 	var timeToSleep = 5
-	for curConn := 0; curConn < 2; curConn++ {
+	for curConn := 0; curConn < *conn; curConn++ {
 		golog.Info("new conn id" + strconv.Itoa(curConn) + "_")
 		go newOneConn(curConn)
 		// 1000以下sleep 0.3
