@@ -7,7 +7,6 @@ import (
 
 var sig = make(chan int)
 var sig2 = make(chan int)
-
 func main() {
 	fmt.Println(time.Now().Hour())
 	go func() {

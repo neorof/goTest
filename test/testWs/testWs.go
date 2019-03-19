@@ -7,7 +7,7 @@ import (
 )
 
 //测试readMessage是会被阻塞
-const uri = "ws://172.31.20.65:9110/websocket"
+const uri = "ws://localhost:9110/websocket"
 
 func main() {
 
@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 	defer conn.Close()
-	var data = "{\"cmd\":\"1_1\",\"ctx\":1,\"payload\":{\"xcx_version\":\"v3.1.1\",\"login_mode\":10,\"token\":\"123456\"}}"
+	var data = "{\"cmd\":\"1_1\",\"payload\":{\"login_mode\":11,\"token\":\"aaaaaa\",\"xcx_version\":\"v10.1\"}}"
 	err1 := conn.WriteMessage(websocket.TextMessage, []byte(data))
 	if err1 != nil {
 		panic(err1)
