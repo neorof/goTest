@@ -122,7 +122,6 @@ func newOneConn(id int) {
 			}
 
 			if c != nil {
-				c.WriteMessage(websocket.BinaryMessage, data)
 				err = c.WriteMessage(websocket.TextMessage, jsonMsg)
 				if err != nil {
 					errTime2++
